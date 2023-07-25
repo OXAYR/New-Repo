@@ -1,20 +1,20 @@
 <template>
-    <div class="Login">
+    <div class="Login" >
         <h1>{{ msg }}</h1>
-        <p v-if="error.length" style=" color: red">{{ error }}</p>
+        <p  style=" color: red">{{ error }}</p>
     <fieldset class="Email">
       <label for="">Email<br></label>
-              <input type="email"  v-model=email>        
+              <input type="email"  v-model=formLogin.email>        
       </fieldset>
       <fieldset class="password">
       <label for="">Password <br></label>
-              <input type="password" v-model=password>        
+              <input type="password" v-model=formLogin.password>        
       </fieldset>
-      <router-link to="/home">
-      <button class="Login">Login {{ Valid(formLogin) }}</button>
+      <router-link to="/todos">
+      <button class="Login" @click="Valid(formLogin)" >Login</button>
       </router-link>
-      <router-link to="/signup">
-      <button class="Register">Register</button>
+      <router-link to="/signup" >
+      <button class="Register" v-show="validCredential">Register</button>
      </router-link>
     </div>
 </template>
@@ -26,6 +26,7 @@
     },
   data() {
     return {
+        validCredential: false,
         formLogin :{
         email: "",
         password: ''    
@@ -44,6 +45,10 @@ methods:{
         } 
         else if (obj.email !== "" && !emailPattern.test(obj.email)) {
             this.error.push("Invalid Email");
+        }
+        else if(obj.email !=='' && obj.password !==''){
+            this.validCredential = true
+            this.error.push("Enter values")
         }
     
     }
