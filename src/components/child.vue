@@ -1,11 +1,14 @@
 <template>
   <div>
-    <button type="button" @click="toExpand()" style="margin-top: 2rem; margin-right: 1rem; background-color:#e07a5f; color: #f4f1de;"> \/ </button>
-    <button type="button" @click="toLess()" style="margin-top: 2rem; margin-right: 1rem; background-color: #e07a5f; color: #f4f1de;"> /\ </button>
+    <button type="button" @click="toExpand()"
+     class="Button"> \/ </button>
+    <button type="button" @click="toLess()" 
+    class="Button"> /\ </button>
   </div>
   <div>
     <ul v-if="expand">
-      <li v-for="todo in todos" :key="todo" style="list-style:none">
+      <li class="todo" v-for="todo in todos" :key="todo" style="list-style:none" 
+      @click.right="toRemove" @click.left="toAdd()" :class="{removed: isRemove}">
         {{ todo }}
       </li>
     </ul>
@@ -21,7 +24,8 @@
     
     data() {
       return {
-        expand: false
+        expand: false,
+        isRemove: false
       }
     },
     computed: {
@@ -35,6 +39,12 @@
       },
       toLess(){
         this.expand = false
+      },
+      toRemove(){
+        this.isRemove = true
+      },
+      toAdd(){
+        this.isRemove = false
       }
       
     },
@@ -77,10 +87,22 @@
     color: #42b983;
   } */
   
-
+  .removed{
+    text-decoration: line-through;
+  }
   .Button{
-  
-    margin-top: 2rem;
+    margin-top: 2rem; 
     margin-right: 1rem;
+    background-color:#2caadc;
+    color: #ffffff;
+    border-radius: 1.8rem;
+    padding: 0.2rem 0.4rem;
+    overflow: hidden;  /* Hide any content that overflows the max-height */
+    transition: max-height 0.3s ease, height 0.3s ease;
+    cursor: pointer;
+  }
+  .Button:hover{
+    background-color: #a7e3fb;;
+    color: #00394f;
   }
   </style>

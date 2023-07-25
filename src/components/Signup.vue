@@ -19,7 +19,7 @@
               <input type="password" v-model=form.confrimPassword>        
       </fieldset>
       <router-link to="/">
-      <button  class="Button" >Submit {{ getForm(form) }}{{ Validate(form) }}</button>
+      <button  class="Button" >Submit {{ getForm(form) }}{{Validate(form) }} </button>
       </router-link>
       
     </div>
@@ -60,13 +60,13 @@
         if (obj.username !== "" && !usernamePattern.test(obj.username)) {
         this.error.push("Invalid Name");
         } 
-        else if (obj.password !== "" && !passwordPattern.test(obj.password)) {
+        if (obj.password !== "" && !passwordPattern.test(obj.password)) {
         this.error.push("Invalid Password");
         } 
-        else if(obj.password !== obj.confrimPassword){
+        if(obj.password !== obj.confrimPassword){
                     this.error.push("Password Does not match")
         }
-        else if (obj.email !== "" && !emailPattern.test(obj.email)) {
+        if (obj.email !== "" && !emailPattern.test(obj.email)) {
         this.error.push("Invalid Email");
         }
         // } else {

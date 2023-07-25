@@ -10,11 +10,12 @@
       <label for="">Password <br></label>
               <input type="password" v-model=formLogin.password>        
       </fieldset>
+      
       <router-link to="/todos">
-      <button class="Login" @click="Valid(formLogin)" >Login</button>
-      </router-link>
+      <button class="Login"  >Login {{ Valid(formLogin) }}</button>
+    </router-link>
       <router-link to="/signup" >
-      <button class="Register" v-show="validCredential">Register</button>
+      <button class="Register" >Register</button>
      </router-link>
     </div>
 </template>
@@ -31,7 +32,7 @@
         email: "",
         password: ''    
         },
-        error:[]
+        error:[],
     }
 },
 methods:{
@@ -40,18 +41,16 @@ methods:{
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-='|"])[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-='|"']{8,}$/;
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-        if (obj.password !== "" && !passwordPattern.test(obj.password)) {
-            this.error.push("Invalid Password");
-        } 
-        else if (obj.email !== "" && !emailPattern.test(obj.email)) {
-            this.error.push("Invalid Email");
-        }
-        else if(obj.email !=='' && obj.password !==''){
-            this.validCredential = true
-            this.error.push("Enter values")
-        }
+        
+      if (!emailPattern.test(obj.email)) {
+        this.error.push("Invalid Email");
+      } 
+      if (!passwordPattern.test(obj.password)) {
+          this.error.push("Invalid Password");
+      }
+        
+      }
     
-    }
     }
     }
 
