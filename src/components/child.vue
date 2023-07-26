@@ -2,13 +2,11 @@
   <div>
     <button type="button" @click="toExpand()"
      class="Button"> \/ </button>
-    <button type="button" @click="toLess()" 
-    class="Button"> /\ </button>
   </div>
   <div>
     <ul v-if="expand">
       <li class="todo" v-for="todo in todos" :key="todo" style="list-style:none" 
-      @click.right="toRemove" @click.left="toAdd()" :class="{removed: isRemove}">
+      @click.right="toRemove" @click.left="toAdd()" :class="{removed: isRemove, Active : isActive}">
         {{ todo }}
       </li>
     </ul>
@@ -29,13 +27,18 @@
       }
     },
     computed: {
-      reversedMessage() {
-      return this.message.split('').reverse().join('');
-    }
+    //   reversedMessage() {
+    //   return this.message.split('').reverse().join('');
+    // }
     },
     methods: {
       toExpand(){
-        this.expand = true
+        if(this.expand == false){
+          this.expand = true;        
+        }
+        else{
+          this.expand = false;        
+        }
       },
       toLess(){
         this.expand = false
@@ -45,7 +48,7 @@
       },
       toAdd(){
         this.isRemove = false
-      }
+      },
       
     },
     
@@ -89,6 +92,7 @@
   
   .removed{
     text-decoration: line-through;
+    color: #a7e3fb;
   }
   .Button{
     margin-top: 2rem; 

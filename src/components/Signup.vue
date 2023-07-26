@@ -18,14 +18,13 @@
       <label for="">Confirm Password <br></label>
               <input type="password" v-model=form.confrimPassword>        
       </fieldset>
-      <router-link to="/">
-      <button  class="Button" @click="getForm(form)" >Submit {{Validate(form)}} </button>
-      </router-link>
+      <button  class="Button" @click="toStore(form)" >Submit {{Validate(form)}}  </button>
       
     </div>
   </template>
   
   <script>
+  import router from '@/router'
   export default {
     name: 'SignUp',
     props: {
@@ -45,14 +44,21 @@
       }
     },
     computed: {
-    shouldNavigate() {
-      // Compute the condition based on the form data
-      return this.getForm(this.form) && this.Validate(this.form);
-    },
+    // shouldNavigate() {
+    //   // Compute the condition based on the form data
+    //   return this.getForm(this.form) && this.Validate(this.form);
+    // },
   },
     methods: {
-  getForm: function(obj) {
-  },
+      toStore(obj){
+        if(obj.email !== "" && obj.password !=="" && obj.username !== "" && obj.confrimPassword!==""){
+   
+          localStorage.setItem("Username",obj.username)
+          localStorage.setItem("Password",obj.password)
+          localStorage.setItem("Email",obj.email)
+          router.push('/')
+        }
+      },
   Validate: function(obj) {
         this.error = [];
         const usernamePattern = /^(?=.*[0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-='|"'])\S+$/;
@@ -60,13 +66,13 @@
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (obj.username !== "" && !usernamePattern.test(obj.username)) {
-        this.error.push("Invalid Name");
+          this.error.push("Invalid Name");
         } 
         if (obj.password !== "" && !passwordPattern.test(obj.password)) {
-        this.error.push("Invalid Password");
+          this.error.push("Invalid Password");
         } 
         if(obj.password !== obj.confrimPassword){
-                    this.error.push("Password Does not match")
+           this.error.push("Password Does not match")
         }
         if (obj.email !== "" && !emailPattern.test(obj.email)) {
         this.error.push("Invalid Email");

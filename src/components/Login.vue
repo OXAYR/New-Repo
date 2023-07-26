@@ -4,22 +4,21 @@
         <p  style=" color: red">{{ error }}</p>
     <fieldset class="Email">
       <label for="">Email<br></label>
-              <input type="email"  v-model=formLogin.email>        
+              <input type="email"  v-model="formLogin.email">        
       </fieldset>
       <fieldset class="password">
       <label for="">Password <br></label>
-              <input type="password" v-model=formLogin.password>        
+              <input type="password" v-model="formLogin.password">        
       </fieldset>
       
-      <router-link to="/todos">
-      <button class="Login"  >Login {{ Valid(formLogin) }}</button>
-    </router-link>
+      <button class="Login" @click="toValidate(formLogin)" >Login {{ Valid(formLogin) }}</button>
       <router-link to="/signup" >
       <button class="Register" >Register</button>
      </router-link>
     </div>
 </template>
 <script>
+import router from '@/router';
     export default {
   name: 'Login',
   props: {
@@ -36,6 +35,17 @@
     }
 },
 methods:{
+  
+    toValidate(obj){
+      
+          if(localStorage.getItem("Email") == obj.email){
+           
+            if(localStorage.getItem("Password") == obj.password){
+            
+              router.push('/todos')
+            }
+          }
+      },
     Valid: function(obj) {
         this.error = [];
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-='|"])[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-='|"']{8,}$/;
