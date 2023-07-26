@@ -19,7 +19,7 @@
               <input type="password" v-model=form.confrimPassword>        
       </fieldset>
       <router-link to="/">
-      <button  class="Button" >Submit {{ getForm(form) }}{{Validate(form) }} </button>
+      <button  class="Button" @click="getForm(form)" >Submit {{Validate(form)}} </button>
       </router-link>
       
     </div>
@@ -45,11 +45,13 @@
       }
     },
     computed: {
-      
+    shouldNavigate() {
+      // Compute the condition based on the form data
+      return this.getForm(this.form) && this.Validate(this.form);
     },
+  },
     methods: {
   getForm: function(obj) {
-    console.log(obj);
   },
   Validate: function(obj) {
         this.error = [];
